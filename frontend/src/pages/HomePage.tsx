@@ -1,5 +1,11 @@
+import Dashboard from "../components/Home/DashBoard";
+
 const HomePage = () => {
-  return <div>Main</div>;
+  return (
+    <>
+      <Dashboard></Dashboard>
+    </>
+  );
 };
 
 export default HomePage;

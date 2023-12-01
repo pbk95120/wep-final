@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import customTheme from "../styles/customTheme";
 
 function Copyright(props: any) {
   return (
@@ -30,8 +31,8 @@ function Copyright(props: any) {
   );
 }
 
-const SignUpPage = () => {
-  const defaultTheme = createTheme();
+const RegisterPage = () => {
+  const defaultTheme = customTheme;
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -106,7 +107,7 @@ const SignUpPage = () => {
       isChecked === true
     ) {
       console.log(data + "폼전송");
-      navigate("/signin");
+      navigate("/login");
     }
   };
 
@@ -126,7 +127,7 @@ const SignUpPage = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Register
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -185,12 +186,12 @@ const SignUpPage = () => {
               </Grid>
             </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Sign Up
+              Sign up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
-                  Already have an account? Sign in
+                <Link href="/login" variant="body2">
+                  Already have an account? Login
                 </Link>
               </Grid>
             </Grid>
@@ -202,4 +203,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default RegisterPage;

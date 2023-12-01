@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
+import customTheme from "../styles/customTheme";
 
 function Copyright(props: any) {
   return (
@@ -28,8 +29,8 @@ function Copyright(props: any) {
   );
 }
 
-const SignInPage = () => {
-  const defaultTheme = createTheme();
+const LoginPage = () => {
+  const defaultTheme = customTheme;
   const [isAlert, setIsAlert] = useState(true);
   const navigate = useNavigate();
 
@@ -61,7 +62,7 @@ const SignInPage = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             {isAlert && (
@@ -90,12 +91,12 @@ const SignInPage = () => {
               autoComplete="current-password"
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Sign In
+              Login
             </Button>
-            <Grid container>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Register"}
                 </Link>
               </Grid>
             </Grid>
@@ -107,4 +108,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default LoginPage;
