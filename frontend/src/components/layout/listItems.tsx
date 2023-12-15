@@ -30,24 +30,10 @@ export const mainListItems = (
     <Link to="/login">
       <ListItemButton>
         <ListItemIcon>
-          <LoginIcon sx={{ color: "#9da4ae" }} />
+          <LogoutIcon sx={{ color: "#9da4ae" }} />
         </ListItemIcon>
-        <ListItemText primary="Login" />
+        <ListItemText primary="Logout" />
       </ListItemButton>
     </Link>
-    <Link to="/register">
-      <ListItemButton>
-        <ListItemIcon>
-          <AppRegistrationIcon sx={{ color: "#9da4ae" }} />
-        </ListItemIcon>
-        <ListItemText primary="Register" />
-      </ListItemButton>
-    </Link>
-    <ListItemButton>
-      <ListItemIcon>
-        <LogoutIcon sx={{ color: "#9da4ae" }} />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
-    </ListItemButton>
   </React.Fragment>
 );

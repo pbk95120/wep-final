@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,13 +15,14 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import customTheme from "../styles/customTheme";
+import { access } from "fs";
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        사이트명
+      <Link color="inherit" href="/">
+        Edu Note
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -42,9 +43,14 @@ const LoginPage = () => {
       password: data.get("password"),
     });
 
+    localStorage.setItem("access_token", "Login");
     navigate("/");
     //검증기능 구현
   };
+
+  useEffect(() => {
+    localStorage.removeItem("access_token");
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>

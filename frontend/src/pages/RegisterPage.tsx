@@ -23,7 +23,7 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="/">
-        사이트명
+        Edu Note
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -107,6 +107,7 @@ const RegisterPage = () => {
       isChecked === true
     ) {
       console.log(data + "폼전송");
+
       navigate("/login");
     }
   };
