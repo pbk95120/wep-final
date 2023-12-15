@@ -19,7 +19,7 @@ import shutil
 
 from pydantic import BaseModel
 
-OPEN_API_KEY = "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"
+OPEN_API_KEY = "yourkey"
 
 class requestData(BaseModel):
     userId: str
