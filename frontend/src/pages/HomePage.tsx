@@ -21,17 +21,19 @@ const HomePage = () => {
   return (
     <main className="flex">
       {isMobile ? <Navbar /> : <Sidebar />}
-      <div className="flex flex-col items-center w-full h-full">
-        <div className="flex-col w-full">
-          <p className="bold text-2xl">Edu Note</p>
+
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <img className="w-8/12 rounded my-2" src="images/library.jpg"></img>
+          <p className="bold text-2xl mb-2">Start Edu Note</p>
           <Link to="/note">
             <Button variant="contained" sx={{ backgroundColor: "#1c2536" }}>
               Start Note
             </Button>
           </Link>
         </div>
-        <div className="w-full"></div>
       </div>
+
       <div className="h-screen" style={{ borderLeft: "1px solid #e7e7e7" }}>
         <Calendar></Calendar>
       </div>
