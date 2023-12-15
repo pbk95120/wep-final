@@ -19,12 +19,14 @@ export const mainListItems = (
         <ListItemText primary="Home" />
       </ListItemButton>
     </Link>
-    <ListItemButton>
-      <ListItemIcon>
-        <ChatIcon sx={{ color: "#9da4ae" }} />
-      </ListItemIcon>
-      <ListItemText primary="My Note" />
-    </ListItemButton>
+    <Link to="/note">
+      <ListItemButton>
+        <ListItemIcon>
+          <ChatIcon sx={{ color: "#9da4ae" }} />
+        </ListItemIcon>
+        <ListItemText primary="My Note" />
+      </ListItemButton>
+    </Link>
     <Link to="/login">
       <ListItemButton>
         <ListItemIcon>

@@ -61,9 +61,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-export default function Dashboard() {
+export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -71,7 +69,7 @@ export default function Dashboard() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", height: "100vh" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}></AppBar>
         <Drawer
@@ -103,18 +101,6 @@ export default function Dashboard() {
           <Divider />
           <List component="nav">{mainListItems}</List>
         </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-        </Box>
       </Box>
     </ThemeProvider>
   );
