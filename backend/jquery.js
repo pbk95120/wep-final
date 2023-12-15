@@ -69,4 +69,21 @@ $(document).ready(function(){
             .then((data) => console.log(data));
     });
 
+    $('.qaButton').click(function(){
+        var userid = $('#userid').val();
+        var question = $('#data').val();
+        fileName = "1702669713498"
+        fetch("http://localhost:8080/getQa/"+userid+"/"+fileName+"/"+question)
+            .then((response) => response.json())
+            .then((data) => $('#qa').text(data.query));
+    });
+
+    $('.readButton').click(function(){
+        var userid = $('#userid').val();
+        var fileName = $('#data').val();
+        fetch("http://localhost:8080/getNote/"+userid+"/"+fileName)
+            .then((response) => response.json())
+            .then((data) => $('#qa').text(data.contents));
+    });
+
 });
