@@ -26,22 +26,19 @@ const Modal = ({ closeModal }: { closeModal: any }) => {
                     type="text"
                     name="name"
                     id="name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full my-2 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full mt-2 mb-4 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Type product name"
                   ></input>
                   <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">
                     Upload File
                   </h3>
-                  <div className="mt-2">
+                  <div className="mt-1">
                     <p className="text-sm text-gray-500">
                       (File length: 180 minutes, support format: m4a, mp3, aac, amr, wav)
                     </p>
                   </div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
-                    Upload file
-                  </label>
                   <input
-                    className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    className="block mt-3 w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id="file_input"
                     type="file"
                   ></input>
