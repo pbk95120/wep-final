@@ -3,15 +3,16 @@ import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 import Calendar from "../components/note/Calender";
 import { getNote, getQa } from "../api/api";
+import { useParams } from "react-router-dom";
 
 const NoteDetailPage = () => {
   const userid = localStorage.getItem("access_token");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
-
   const [fileMessage, setFileMessage] = useState("");
   const [clovaMessage, setClovaMessage] = useState([]);
   const [userMessage, setUserMessage] = useState([]);
   const [query, setQuery] = useState("");
+  const params = useParams();
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,7 +23,7 @@ const NoteDetailPage = () => {
 
     const fetchData = async () => {
       try {
-        const res = await getNote(userid, "테스트");
+        const res = await getNote(userid, params.id);
         console.log(res);
         setFileMessage(res.contents);
       } catch (error) {
@@ -38,9 +39,9 @@ const NoteDetailPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(userid, "테스트", query);
+
     try {
-      const res = await getQa(userid, "테스트", query);
+      const res = await getQa(userid, params.id, query);
       const newMessage = [...clovaMessage, res.query];
       setClovaMessage(newMessage);
       setUserMessage([...userMessage, query]);

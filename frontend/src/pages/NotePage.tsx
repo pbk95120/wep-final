@@ -11,6 +11,8 @@ const NotePage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [ctimeList, setCtimeList] = useState([]);
+  const [mtimeList, setMtimeList] = useState([]);
 
   useEffect(() => {
     getNotes();
@@ -29,6 +31,8 @@ const NotePage = () => {
     const userid = localStorage.getItem("access_token");
     const res = await getNoteList(userid);
     setNotes(res.fileList);
+    setCtimeList(res.ctimeList);
+    setMtimeList(res.mtimeList);
   };
 
   const handleOpenModal = () => {
@@ -65,10 +69,10 @@ const NotePage = () => {
                   Note Type
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Owner
+                  Date
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Date
+                  Last Edit
                 </th>
               </tr>
             </thead>
@@ -84,8 +88,8 @@ const NotePage = () => {
                     </th>
                   </Link>
                   <td className="px-6 py-4">All Note</td>
-                  <td className="px-6 py-4">User</td>
-                  <td className="px-6 py-4">date</td>
+                  <td className="px-6 py-4">{ctimeList[idx]}</td>
+                  <td className="px-6 py-4">{mtimeList[idx]}</td>
                 </tr>
               ))}
             </tbody>
