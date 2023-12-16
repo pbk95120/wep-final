@@ -31,7 +31,7 @@ const NotePage = () => {
     setIsModalOpen(false);
   };
 
-  console.log(getNoteList);
+  // console.log(getNoteList);
 
   return (
     <main className="flex">
@@ -39,7 +39,11 @@ const NotePage = () => {
       <div className="flex flex-col items-center w-full h-full">
         <div className="flex w-full justify-around my-4 gap-20">
           <p className="bold text-2xl">Edu Note</p>
-          <Button onClick={handleOpenModal} variant="contained" sx={{ backgroundColor: "#1c2536" }}>
+          <Button
+            onClick={handleOpenModal}
+            variant="contained"
+            sx={{ backgroundColor: "#1c2536" }}
+          >
             Add Note
           </Button>
         </div>
@@ -65,7 +69,10 @@ const NotePage = () => {
             <tbody>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <Link to="/note/1">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
                     Apple MacBook Pro 17"
                   </th>
                 </Link>
@@ -74,7 +81,10 @@ const NotePage = () => {
                 <td className="px-6 py-4">$2999</td>
               </tr>
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
                   Microsoft Surface Pro
                 </th>
                 <td className="px-6 py-4">White</td>
@@ -82,7 +92,10 @@ const NotePage = () => {
                 <td className="px-6 py-4">$1999</td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
                   Magic Mouse 2
                 </th>
                 <td className="px-6 py-4">Black</td>

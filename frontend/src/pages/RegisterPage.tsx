@@ -21,7 +21,12 @@ import { signup } from "../api/api";
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {"Copyright © "}
       <Link color="inherit" href="/">
         Edu Note
@@ -49,7 +54,9 @@ const RegisterPage = () => {
 
   const emailRegex = (email: string) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    !emailRegex.test(email) ? setEmailError("Not a valid Email format") : setEmailError("");
+    !emailRegex.test(email)
+      ? setEmailError("Not a valid Email format")
+      : setEmailError("");
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,17 +68,23 @@ const RegisterPage = () => {
   const passwordRegex = (password: string) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
     !passwordRegex.test(password)
-      ? setPasswordError("Password must be at least 8 character, contain letters and numbers.")
+      ? setPasswordError(
+          "Password must be at least 8 character, contain letters and numbers."
+        )
       : setPasswordError("");
   };
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const confirmPaassword = event.target.value;
     confirmPasswordRegex(confirmPaassword);
   };
 
   const confirmPasswordRegex = (confirmPassword: string) => {
-    confirmPassword !== password ? setConfirmPasswordError("Password doesn't match") : setConfirmPasswordError("");
+    confirmPassword !== password
+      ? setConfirmPasswordError("Password doesn't match")
+      : setConfirmPasswordError("");
   };
 
   const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +109,9 @@ const RegisterPage = () => {
     if (data.get("email") === "") {
       setEmailError("Not a valid Email format");
     } else if (data.get("password") === "") {
-      setPasswordError("Password must be at least 8 character, contain letters and numbers.");
+      setPasswordError(
+        "Password must be at least 8 character, contain letters and numbers."
+      );
     }
 
     //입력값 검증 후 폼 전송
@@ -107,7 +122,10 @@ const RegisterPage = () => {
       data.get("password") === data.get("confirmPassword") &&
       isChecked === true
     ) {
-      const res = await signup(data.get("email").toString(), data.get("password").toString());
+      const res = await signup(
+        data.get("email").toString(),
+        data.get("password").toString()
+      );
       if (res.status) {
         navigate("/login");
       }
@@ -132,12 +150,19 @@ const RegisterPage = () => {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 {isAlert && (
                   <Stack sx={{ width: "100%" }} spacing={2}>
-                    <Alert severity="error">You must agree to the checkbox!</Alert>
+                    <Alert severity="error">
+                      You must agree to the checkbox!
+                    </Alert>
                   </Stack>
                 )}
                 <TextField
@@ -180,15 +205,24 @@ const RegisterPage = () => {
                   onChange={handleConfirmPasswordChange}
                 />
               </Grid>
-              <p className="text-xs text-rose-600 ml-4 mt-2">{confirmPasswordError}</p>
+              <p className="text-xs text-rose-600 ml-4 mt-2">
+                {confirmPasswordError}
+              </p>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox color="primary" onChange={handleCheckBox} />}
+                  control={
+                    <Checkbox color="primary" onChange={handleCheckBox} />
+                  }
                   label="I agree to be a member"
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               Sign up
             </Button>
             <Grid container justifyContent="flex-end">
