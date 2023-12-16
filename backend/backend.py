@@ -19,19 +19,13 @@ from typing import Optional
 from pydantic import BaseModel
 from glob import glob
 import uvicorn
+import openai
+import shutil
 import os
 
 #This is the key for Using OpenAi
 #Please do not share this key
 OPEN_API_KEY = "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" #You can use your own key
-
-#The Class for Request
-#for defining requesting structure during 'POST'
-class requestData(BaseModel):
-    userId: str #get User Id as a String, and it must be included in the request
-    password: Optional[str] = None  #get Password as a String, and it is optional
-    fileName: Optional[str] = None  #get File Name as a String, and it is optional
-    contents: Optional[str] = None  #get Contents as a String, and it is optional
 
 #Define FastAPI Application
 app = FastAPI()
@@ -75,19 +69,19 @@ def load_from_db(path):
 
 #Function For Sign Up
 @app.post('/signup')
-def return_signup_stat(request: requestData):
+def return_signup_stat(userid:str = Form(...), password:str = Form(...)):
     #Get All User Directories in server
     for path, dir, files in os.walk("./data/"):
         print(dir)
         for folder_name in dir:
             #When there exists user's folder
-            if folder_name == request.userId:
+            if folder_name == userid:
                 return {"exist":True, "status":False}
     try:
-        user_dir = "./data/" + request.userId
+        user_dir = "./data/" + userid
         os.mkdir(user_dir)
-        f = open(user_dir + "/." + request.userId,"w+")
-        f.write(request.password)
+        f = open(user_dir + "/." + userid,"w+")
+        f.write(password)
         f.close()
         return {"exist":False, "status":True}
     except:
@@ -95,18 +89,18 @@ def return_signup_stat(request: requestData):
 
 #Function For Sign In
 @app.post('/signin')
-def return_signin_stat(request: requestData):
+def return_signin_stat(userid:str = Form(...), password:str = Form(...)):
     #Get All User Directories in server
     for path, dir, files in os.walk("./data/"):
         print(dir)
         for folder_name in dir:
             #When there exists user's folder
-            if folder_name == request.userId:
+            if folder_name == userid:
                 #there has a hidden file for looking up password
-                f = open("./data/" + request.userId + "/." + request.userId,"r")
+                f = open("./data/" + userid + "/." + userid,"r")
                 password = f.read()
                 #When the password matches
-                if password == request.password:
+                if password == password:
                     return {"exist":True, "status":True}
                 #When the password not matches
                 else:
@@ -134,16 +128,33 @@ def return_note(userid:str, filename:str):
 
 #Function For Uploading Notes
 @app.post("/uploadNote")
-async def upload_file(request: requestData):
-    upload_dir = "./data/" + request.userId + "/"
-    f = open(upload_dir  + request.fileName,"w+")
-    f.write(request.contents)
+def upload_file(userid:str = Form(...), password:str = Form(...), filename:str = Form(...), contents:str = Form(...)):
+    upload_dir = "./data/" + userid + "/"
+    f = open(upload_dir  + filename,"w+")
+    f.write(contents)
     f.close()
 
-    docs = load_n_split(upload_dir + request.fileName)
-    save_as_db(upload_dir, request.fileName, docs)
+    docs = load_n_split(upload_dir + filename)
+    save_as_db(upload_dir, filename, docs)
 
-    return {"status": True, "file": request.fileName}
+    return {"status": True, "file": filename}
+
+@app.post("/uploadSpeech/{userid}/{filename}")
+def upload_speech(userid:str, filename:str, file: UploadFile):
+    print("HI")
+    upload_dir = "./data/" + userid + "/"
+    
+    with open(os.path.join(upload_dir, filename), "wb") as fp:
+        shutil.copyfileobj(file.file, fp)
+
+    content = file.read()
+    openai.api_key = OPEN_API_KEY
+    transcript = openai.Audio.transcribe("whisper-1", content)
+    f = open(upload_dir  + filename,"w+")
+    f.write(transcript)
+    f.close()
+
+    return {"status": True, "filename": filename}
 
 #Function For Getting Query Answer
 @app.get('/getQa/{userid}/{filename}/{query}')

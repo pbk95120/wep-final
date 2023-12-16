@@ -11,17 +11,48 @@
     <div class="loginForm" action="">
         <h2>Login</h2><br>
         <h4>Enter user name and password:</h4><br>
+        
         <p>Email</p>
         <input id="userid" class="inputBox" type="text" placeholder="id"><br>
         <p>Password</p>
         <input id="password" class="inputBox" type="password" placeholder="Password"><br>
         <input id="data" class="inputBox" type="text" placeholder="memo or query or filename"><br>
+        <form id="uploadbanner" enctype="multipart/form-data" method="post" action="http://localhost:8080/uploadSpeech">
+            <input id="userid" name="userid" type="text" placeholder="username"/>
+            <input id="file" name="file" type="file" />
+            <input type="submit" value="submit" id="submit" />
+         </form>
         <button class="loginButton">Login</button>
         <button class="signupButton">signup</button>
         <button class="getFileButton">getList</button>
         <button class="uploadTextButton">upload</button>
         <button class="qaButton">qa</button>
         <button class="readButton">read</button>
+
+        <form id="upload1" method="post" action="http://localhost:8080/signup">
+            <p>Email</p>
+            <input id="userid" name="userid" class="inputBox" type="text" placeholder="id"><br>
+            <p>Password</p>
+            <input id="password" name="password" class="inputBox" type="password" placeholder="Password"><br>
+            <input type="submit" value="submit" id="submit" />
+         </form>
+
+
+        <form id="upload1" method="post" action="http://localhost:8080/signin">
+            <p>Email</p>
+            <input id="userid" name="userid" class="inputBox" type="text" placeholder="id"><br>
+            <p>Password</p>
+            <input id="password" name="password" class="inputBox" type="password" placeholder="Password"><br>
+            <input type="submit" value="submit" id="submit" />
+         </form>
+
+         <form id="upload1" method="post" action="http://localhost:8080/getNoteList/">
+            <p>Email</p>
+            <input id="userid" name="userid" class="inputBox" type="text" placeholder="id"><br>
+            <p>Password</p>
+            <input id="password" name="password" class="inputBox" type="password" placeholder="Password"><br>
+            <input type="submit" value="submit" id="submit" />
+         </form>
 
         <p id="qa">qa</p>
         
