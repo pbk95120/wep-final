@@ -6,7 +6,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 const Calendar = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar />
+      <DateCalendar sx={{ overflow: "hidden" }} />
     </LocalizationProvider>
   );
 };

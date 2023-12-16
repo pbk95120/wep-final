@@ -15,12 +15,16 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import customTheme from "../styles/customTheme";
-import { access } from "fs";
 import { signin } from "../api/api";
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {"Copyright © "}
       <Link color="inherit" href="/">
         Edu Note
@@ -40,9 +44,14 @@ const LoginPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    if (data.get("email").toString() !== "" && data.get("password").toString() !== "") {
-      const res = await signin(data.get("email").toString(), data.get("password").toString());
-      console.log(res);
+    if (
+      data.get("email").toString() !== "" &&
+      data.get("password").toString() !== ""
+    ) {
+      const res = await signin(
+        data.get("email").toString(),
+        data.get("password").toString()
+      );
       if (res.status) {
         localStorage.setItem("access_token", data.get("email").toString());
         navigate("/");
@@ -72,10 +81,17 @@ const LoginPage = () => {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             {isAlert && (
               <Stack sx={{ width: "100%" }} spacing={2}>
-                <Alert severity="error">Please check your Email and Password again.</Alert>
+                <Alert severity="error">
+                  Please check your Email and Password again.
+                </Alert>
               </Stack>
             )}
             <TextField
@@ -98,7 +114,12 @@ const LoginPage = () => {
               id="password"
               autoComplete="current-password"
             />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               Login
             </Button>
             <Grid container justifyContent="flex-end">

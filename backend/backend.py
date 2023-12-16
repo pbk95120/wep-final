@@ -25,7 +25,7 @@ import os
 
 #This is the key for Using OpenAi
 #Please do not share this key
-OPEN_API_KEY = "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" #You can use your own key
+OPEN_API_KEY = "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" #You can use your own key
 
 #Define FastAPI Application
 app = FastAPI()
