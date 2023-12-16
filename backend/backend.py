@@ -22,6 +22,9 @@ import shutil
 import time
 import os
 
+#For Tokenizing chatting log
+MAGIC_NUMBER = '!!2087342418!!'
+
 #This is the key for Using OpenAi
 #Please do not share this key
 load_dotenv()
@@ -138,13 +141,23 @@ def return_note(userid:str, notename:str):
     f = open("./data/" + userid + "/" + notename + ".txt","r")
     contents = f.read()
 
-    return {"contents": contents}
+    f = open("./data/" + userid + "/" + notename + ".chatlog","r")
+    chat_log = f.read()
+    chat_log_list = chat_log.split(MAGIC_NUMBER)
+
+    f = open("./data/" + userid + "/" + notename + ".memo","r")
+    memo = f.read()
+
+    print(chat_log_list)
+    print(memo)
+
+    return {"contents": contents, "chatlog": chat_log_list, "memo": memo}
 
 #Function For Uploading Notes
-@app.post("/uploadNote")
-def upload_file(userid:str = Form(...), notename:str = Form(...), contents:str = Form(...)):
+@app.post("/uploadMemo/{userid}/{notename}")
+def upload_file(userid:str, notename:str, contents:str = Form(...)):
     upload_dir = "./data/" + userid + "/"
-    f = open(upload_dir  + notename,"w+")
+    f = open(upload_dir  + notename + ".memo","w+")
     f.write(contents)
     f.close()
 
@@ -164,6 +177,13 @@ def upload_speech(userid:str, notename:str, file: UploadFile):
     f.write(transcript.text)
     f.close()
 
+    f = open(upload_dir  + notename + ".chatlog","w+")
+    f.write("Hello, " + userid + "! Ask me everything about this Note.")
+    f.close()
+
+    f = open(upload_dir  + notename + ".memo","w+")
+    f.close()
+
     docs = load_n_split(upload_dir + notename + ".txt")
     save_as_db(upload_dir, notename, docs)
 
@@ -181,7 +201,27 @@ def return_query(userid:str, notename:str, query:str):
     qa = RetrievalQA.from_chain_type(llm=chat,
                                     chain_type="stuff", retriever=retriever)
     result = qa.run(query)
+
+    path = "./data/" + userid + "/" + notename
+
+    f = open(path + ".chatlog","a+")
+    f.write(MAGIC_NUMBER)
+    f.write(query)
+    f.write(MAGIC_NUMBER)
+    f.write(result)
+
+    f.close()
+
     return {"status": True, "query": result}
+
+@app.delete("/deleteFile/{userid}/{notename}")
+def delete_file(userid:str, notename: str):
+    path = "./data/" + userid + "/"
+
+    [os.remove(file) for file in glob(path + notename + ".*")]
+    shutil.rmtree(path + "." + notename)
+
+    return {"status": True, "filename": notename}
 
 if __name__=='__main__':
     uvicorn.run(app, host='localhost', port = 8080)
