@@ -95,17 +95,17 @@ const RegisterPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    //패스워드 같은지 확인다시한번
+    //Check again to see if it's like a password
     if (data.get("password") !== data.get("confirmPassword")) {
       setConfirmPasswordError("Password doesn't match");
     }
 
-    //체크박스 확인
+    // Check the checkbox
     if (!isChecked) {
       setIsAlert(true);
     }
 
-    //값 비었는지 확인
+    //Check if the value is empty
     if (data.get("email") === "") {
       setEmailError("Not a valid Email format");
     } else if (data.get("password") === "") {
@@ -114,7 +114,7 @@ const RegisterPage = () => {
       );
     }
 
-    //입력값 검증 후 폼 전송
+    // Send form after verifying input value
     else if (
       emailError === "" &&
       passwordError === "" &&

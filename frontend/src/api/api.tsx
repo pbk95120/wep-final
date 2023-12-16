@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//signup
 export const signup = async (userid: string, password: string) => {
   const formData = new FormData();
   formData.append("userid", userid);
@@ -14,6 +15,7 @@ export const signup = async (userid: string, password: string) => {
   return response.data;
 };
 
+//sign in
 export const signin = async (userid: string, password: string) => {
   const formData = new FormData();
   formData.append("userid", userid);
@@ -74,6 +76,7 @@ export const getQa = async (
   return data;
 };
 
+//deleteNote
 export const deleteNote = async (userid: string, notename: string) => {
   const { data } = await axios.delete(
     `http://localhost:8080/deleteFile/${userid}/${notename}`
@@ -81,6 +84,7 @@ export const deleteNote = async (userid: string, notename: string) => {
   return data;
 };
 
+//uploadMemo
 export const uploadMemo = async (
   userid: string,
   notename: string,

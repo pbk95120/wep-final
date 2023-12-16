@@ -27,6 +27,7 @@ const NotePage = () => {
     };
   }, []);
 
+  //Get Noteㄴ List
   const getNotes = async () => {
     const userid = localStorage.getItem("access_token");
     const res = await getNoteList(userid);
@@ -35,6 +36,7 @@ const NotePage = () => {
     setMtimeList(res.mtimeList);
   };
 
+  //Call note deletion
   const handleDeleteNote = async (notename: string) => {
     const userid = localStorage.getItem("access_token");
     const res = await deleteNote(userid, notename);
@@ -42,10 +44,12 @@ const NotePage = () => {
     getNotes();
   };
 
+  //Open Modal
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
+  //Close Modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };

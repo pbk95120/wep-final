@@ -1,21 +1,26 @@
 import React, { useState, FormEvent } from "react";
 import { uploadSpeech } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+
+//File Submission Modal
 const Modal = ({ closeModal }: { closeModal: any }) => {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File>(null);
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
 
+  //Check file title
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
+  //Check files
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     setFile(selectedFile);
   };
 
+  //Submission function
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const userid = localStorage.getItem("access_token");
@@ -47,7 +52,6 @@ const Modal = ({ closeModal }: { closeModal: any }) => {
                   >
                     Note Name
                   </h3>
-
                   <input
                     type="text"
                     name="name"

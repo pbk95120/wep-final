@@ -21,7 +21,6 @@ const HomePage = () => {
   return (
     <main className="flex">
       {isMobile ? <Navbar /> : <Sidebar />}
-
       <div className="w-full h-full flex items-center justify-center">
         <div className="flex flex-col items-center">
           <img
@@ -37,7 +36,6 @@ const HomePage = () => {
           </Link>
         </div>
       </div>
-
       <div className="h-screen" style={{ borderLeft: "1px solid #e7e7e7" }}>
         <Calendar></Calendar>
       </div>

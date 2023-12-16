@@ -5,6 +5,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 
+//navbar functionality
 const Navbar = () => {
   return (
     <div className="flex justify-around items-center bg-navy rounded p-3">

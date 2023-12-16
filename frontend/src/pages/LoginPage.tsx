@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import customTheme from "../styles/customTheme";
 import { signin } from "../api/api";
 
+//copyright component
 function Copyright(props: any) {
   return (
     <Typography
@@ -40,6 +41,7 @@ const LoginPage = () => {
   const [isAlert, setIsAlert] = useState(true);
   const navigate = useNavigate();
 
+  //Login Submission Form Function
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

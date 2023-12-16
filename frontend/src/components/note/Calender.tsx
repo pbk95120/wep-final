@@ -20,6 +20,7 @@ const Calendar = () => {
     navigate("/note");
   };
 
+  // get stored memo
   const getMemo = async () => {
     const userid = localStorage.getItem("access_token");
     const notename = pathname.substring(6, pathname.length);
@@ -27,12 +28,14 @@ const Calendar = () => {
     setMemo(res.memo);
   };
 
+  // post to store memo
   const handleSaveMemo = async () => {
     const userid = localStorage.getItem("access_token");
     const notename = pathname.substring(6, pathname.length);
     await uploadMemo(userid, notename, memo);
   };
 
+  // is NoteDetailPage
   const checkPage = () => {
     getMemo();
     setIsDetailPage(true);
