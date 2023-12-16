@@ -25,7 +25,7 @@ import os
 
 #This is the key for Using OpenAi
 #Please do not share this key
-OPEN_API_KEY = "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" #You can use your own key
+OPEN_API_KEY = "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" #You can use your own key
 
 #Define FastAPI Application
 app = FastAPI()
@@ -98,9 +98,9 @@ def return_signin_stat(userid:str = Form(...), password:str = Form(...)):
             if folder_name == userid:
                 #there has a hidden file for looking up password
                 f = open("./data/" + userid + "/." + userid,"r")
-                password = f.read()
+                password_validate = f.read()
                 #When the password matches
-                if password == password:
+                if password == password_validate:
                     return {"exist":True, "status":True}
                 #When the password not matches
                 else:
@@ -141,17 +141,16 @@ def upload_file(userid:str = Form(...), password:str = Form(...), filename:str =
 
 @app.post("/uploadSpeech/{userid}/{filename}")
 def upload_speech(userid:str, filename:str, file: UploadFile):
-    print("HI")
     upload_dir = "./data/" + userid + "/"
     
-    with open(os.path.join(upload_dir, filename), "wb") as fp:
+    with open(os.path.join(upload_dir, filename + ".mp3"), "wb") as fp:
         shutil.copyfileobj(file.file, fp)
 
-    content = file.read()
+    content = open(os.path.join(upload_dir, filename + ".mp3"), "rb")
     openai.api_key = OPEN_API_KEY
     transcript = openai.Audio.transcribe("whisper-1", content)
-    f = open(upload_dir  + filename,"w+")
-    f.write(transcript)
+    f = open(upload_dir  + filename + ".txt","w+")
+    f.write(transcript.text)
     f.close()
 
     return {"status": True, "filename": filename}
