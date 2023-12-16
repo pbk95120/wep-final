@@ -5,6 +5,7 @@ import Calendar from "../components/note/Calender";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Modal from "../components/layout/Modal";
+import { getNoteList } from "../api/api";
 
 const NotePage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
@@ -29,6 +30,8 @@ const NotePage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  console.log(getNoteList);
 
   return (
     <main className="flex">

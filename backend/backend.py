@@ -1,7 +1,6 @@
 #Import Fastapi
 #for making server
 from fastapi import FastAPI, Form, Request, UploadFile, File
-from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 
 #Import Langchain
@@ -29,7 +28,6 @@ OPEN_API_KEY = "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" #You can us
 
 #Define FastAPI Application
 app = FastAPI()
-templates = Jinja2Templates(directory='./')
 
 #Set All IPs to access backend server
 app.add_middleware(

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import customTheme from "../styles/customTheme";
+import { signup } from "../api/api";
 
 function Copyright(props: any) {
   return (
@@ -77,7 +78,7 @@ const RegisterPage = () => {
     setIsChecked(event.target.checked);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -106,9 +107,10 @@ const RegisterPage = () => {
       data.get("password") === data.get("confirmPassword") &&
       isChecked === true
     ) {
-      console.log(data + "폼전송");
-
-      navigate("/login");
+      const res = await signup(data.get("email").toString(), data.get("password").toString());
+      if (res.status) {
+        navigate("/login");
+      }
     }
   };
 

@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import customTheme from "../styles/customTheme";
 import { access } from "fs";
+import { signin } from "../api/api";
 
 function Copyright(props: any) {
   return (
@@ -35,17 +36,18 @@ const LoginPage = () => {
   const [isAlert, setIsAlert] = useState(true);
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
 
-    localStorage.setItem("access_token", "Login");
-    navigate("/");
-    //검증기능 구현
+    if (data.get("email").toString() !== "" && data.get("password").toString() !== "") {
+      const res = await signin(data.get("email").toString(), data.get("password").toString());
+      console.log(res);
+      if (res.status) {
+        localStorage.setItem("access_token", data.get("email").toString());
+        navigate("/");
+      }
+    }
   };
 
   useEffect(() => {
