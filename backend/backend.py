@@ -24,7 +24,7 @@ import os
 
 #This is the key for Using OpenAi
 #Please do not share this key
-OPEN_API_KEY = "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" #You can use your own key
+OPEN_API_KEY = "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" #You can use your own key
 
 #Define FastAPI Application
 app = FastAPI()
@@ -110,53 +110,54 @@ def return_signin_stat(userid:str = Form(...), password:str = Form(...)):
 @app.get('/getNoteList/{userid}')
 def return_note_list(userid:str):
     file_list = os.listdir("./data/" + userid)
-    file_list_txt = [file for file in file_list if not file.startswith(".")]
+    file_list_txt = [file.rsplit('.')[0] for file in file_list if not file.startswith(".")]
 
-    file_list_txt.sort()
+    file_list_txt = list(set(file_list_txt))
+    print(file_list_txt)
 
     return {"fileList": file_list_txt}
 
 #Function For Getting Contents of Notes
-@app.get('/getNote/{userid}/{filename}')
-def return_note(userid:str, filename:str):
-    f = open("./data/" + userid + "/" + filename,"r")
+@app.get('/getNote/{userid}/{notename}')
+def return_note(userid:str, notename:str):
+    f = open("./data/" + userid + "/" + notename,"r")
     contents = f.read()
 
     return {"contents": contents}
 
 #Function For Uploading Notes
 @app.post("/uploadNote")
-def upload_file(userid:str = Form(...), password:str = Form(...), filename:str = Form(...), contents:str = Form(...)):
+def upload_file(userid:str = Form(...), password:str = Form(...), notename:str = Form(...), contents:str = Form(...)):
     upload_dir = "./data/" + userid + "/"
-    f = open(upload_dir  + filename,"w+")
+    f = open(upload_dir  + notename,"w+")
     f.write(contents)
     f.close()
 
-    docs = load_n_split(upload_dir + filename)
-    save_as_db(upload_dir, filename, docs)
+    return {"status": True, "file": notename}
 
-    return {"status": True, "file": filename}
-
-@app.post("/uploadSpeech/{userid}/{filename}")
-def upload_speech(userid:str, filename:str, file: UploadFile):
+@app.post("/uploadSpeech/{userid}/{notename}")
+def upload_speech(userid:str, notename:str, file: UploadFile):
     upload_dir = "./data/" + userid + "/"
     
-    with open(os.path.join(upload_dir, filename + ".mp3"), "wb") as fp:
+    with open(os.path.join(upload_dir, notename + ".mp3"), "wb") as fp:
         shutil.copyfileobj(file.file, fp)
 
-    content = open(os.path.join(upload_dir, filename + ".mp3"), "rb")
+    content = open(os.path.join(upload_dir, notename + ".mp3"), "rb")
     openai.api_key = OPEN_API_KEY
     transcript = openai.Audio.transcribe("whisper-1", content)
-    f = open(upload_dir  + filename + ".txt","w+")
+    f = open(upload_dir  + notename + ".txt","w+")
     f.write(transcript.text)
     f.close()
 
-    return {"status": True, "filename": filename}
+    docs = load_n_split(upload_dir + notename + ".txt")
+    save_as_db(upload_dir, notename, docs)
+
+    return {"status": True, "filename": notename}
 
 #Function For Getting Query Answer
-@app.get('/getQa/{userid}/{filename}/{query}')
-def return_query(userid:str, filename:str, query:str):
-    path = "./data/" + userid + "/." + filename
+@app.get('/getQa/{userid}/{notename}/{query}')
+def return_query(userid:str, notename:str, query:str):
+    path = "./data/" + userid + "/." + notename
     
     chat = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0.9, openai_api_key=OPEN_API_KEY)
     # chat = ChatOpenAI(model_name='gpt-4', temperature=0.9, openai_api_key=OPEN_API_KEY)
