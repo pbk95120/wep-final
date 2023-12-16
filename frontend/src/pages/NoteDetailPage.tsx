@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 import Calendar from "../components/note/Calender";
@@ -13,6 +13,8 @@ const NoteDetailPage = () => {
   const [userMessage, setUserMessage] = useState([]);
   const [query, setQuery] = useState("");
   const params = useParams();
+  const today = new Date();
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,6 +39,10 @@ const NoteDetailPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [clovaMessage, userMessage]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -45,6 +51,7 @@ const NoteDetailPage = () => {
       const newMessage = [...clovaMessage, res.query];
       setClovaMessage(newMessage);
       setUserMessage([...userMessage, query]);
+      setQuery("");
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +74,7 @@ const NoteDetailPage = () => {
                   Clova
                 </span>
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  now
+                  {today.toLocaleDateString()}
                 </span>
               </div>
               <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white overflow-auto max-h-60">
@@ -84,7 +91,10 @@ const NoteDetailPage = () => {
           </div>
           {clovaMessage.map((msg, index) => (
             <>
-              <div className="flex justify-center gap-2 w-full mt-4">
+              <div
+                className="flex justify-center gap-2 w-full mt-4"
+                ref={messagesEndRef}
+              >
                 <img
                   className="w-8 h-8 rounded-full ml-2"
                   src="/images/profile.png"
@@ -96,7 +106,7 @@ const NoteDetailPage = () => {
                       User
                     </span>
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                      now
+                      {today.toLocaleDateString()}
                     </span>
                   </div>
                   <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
@@ -123,7 +133,7 @@ const NoteDetailPage = () => {
                       Clova
                     </span>
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                      now
+                      {today.toLocaleDateString()}
                     </span>
                   </div>
                   <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white overflow-auto max-h-60">
@@ -153,6 +163,7 @@ const NoteDetailPage = () => {
               className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Your message..."
               onChange={(e) => setQuery(e.target.value)}
+              value={query}
             ></textarea>
             <button
               type="submit"

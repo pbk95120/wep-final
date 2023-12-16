@@ -74,6 +74,7 @@ const NotePage = () => {
                 <th scope="col" className="px-6 py-3">
                   Last Edit
                 </th>
+                <th scope="col" className="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody>
@@ -90,6 +91,7 @@ const NotePage = () => {
                   <td className="px-6 py-4">All Note</td>
                   <td className="px-6 py-4">{ctimeList[idx]}</td>
                   <td className="px-6 py-4">{mtimeList[idx]}</td>
+                  <button className="ml-5">delete Note</button>
                 </tr>
               ))}
             </tbody>
