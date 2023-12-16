@@ -31,8 +31,6 @@ const NotePage = () => {
     setIsModalOpen(false);
   };
 
-  console.log(getNoteList);
-
   return (
     <main className="flex">
       {isMobile ? <Navbar /> : <Sidebar />}

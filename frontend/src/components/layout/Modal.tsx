@@ -1,13 +1,25 @@
 import React, { useState, FormEvent } from "react";
+import { uploadSpeech } from "../../api/api";
 
 const Modal = ({ closeModal }: { closeModal: any }) => {
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number | "">("");
-  const [category, setCategory] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [name, setName] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    setFile(selectedFile);
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    const userid = localStorage.getItem("access_token");
+    const res = await uploadSpeech(userid, name, file);
+    console.log(res);
+    closeModal();
   };
 
   return (
@@ -27,7 +39,8 @@ const Modal = ({ closeModal }: { closeModal: any }) => {
                     name="name"
                     id="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full mt-2 mb-4 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Type product name"
+                    placeholder="Type Note name"
+                    onChange={handleNameChange}
                   ></input>
                   <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">
                     Upload File
@@ -41,14 +54,15 @@ const Modal = ({ closeModal }: { closeModal: any }) => {
                     className="block mt-3 w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id="file_input"
                     type="file"
+                    onChange={handleFileChange}
                   ></input>
                 </div>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
-                type="button"
-                onClick={closeModal}
+                type="submit"
+                onClick={handleSubmit}
                 className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
               >
                 Submit
