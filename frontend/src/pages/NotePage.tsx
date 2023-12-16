@@ -5,7 +5,7 @@ import Calendar from "../components/note/Calender";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Modal from "../components/layout/Modal";
-import { getNoteList } from "../api/api";
+import { getNoteList, deleteNote } from "../api/api";
 
 const NotePage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 425);
@@ -33,6 +33,13 @@ const NotePage = () => {
     setNotes(res.fileList);
     setCtimeList(res.ctimeList);
     setMtimeList(res.mtimeList);
+  };
+
+  const handleDeleteNote = async (notename: string) => {
+    const userid = localStorage.getItem("access_token");
+    const res = await deleteNote(userid, notename);
+    console.log(res);
+    getNotes();
   };
 
   const handleOpenModal = () => {
@@ -91,7 +98,12 @@ const NotePage = () => {
                   <td className="px-6 py-4">All Note</td>
                   <td className="px-6 py-4">{ctimeList[idx]}</td>
                   <td className="px-6 py-4">{mtimeList[idx]}</td>
-                  <button className="ml-5">delete Note</button>
+                  <button
+                    className="ml-5"
+                    onClick={() => handleDeleteNote(notes[idx])}
+                  >
+                    delete Note
+                  </button>
                 </tr>
               ))}
             </tbody>

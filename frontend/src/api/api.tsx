@@ -73,3 +73,30 @@ export const getQa = async (
   );
   return data;
 };
+
+export const deleteNote = async (userid: string, notename: string) => {
+  const { data } = await axios.delete(
+    `http://localhost:8080/deleteFile/${userid}/${notename}`
+  );
+  return data;
+};
+
+export const uploadMemo = async (
+  userid: string,
+  notename: string,
+  contents: string
+) => {
+  const formData = new FormData();
+  formData.append("contents", contents);
+  const response = await axios.post(
+    `http://localhost:8080/uploadMemo/${userid}/${notename}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  return response.data;
+};
