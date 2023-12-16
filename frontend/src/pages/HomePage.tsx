@@ -24,7 +24,11 @@ const HomePage = () => {
 
       <div className="w-full h-full flex items-center justify-center">
         <div className="flex flex-col items-center">
-          <img className="w-8/12 max-h-screen rounded my-10" src="images/library.jpg"></img>
+          <img
+            className="w-8/12 max-h-screen rounded my-10"
+            src="images/library.jpg"
+            alt="library"
+          ></img>
           <p className="bold text-2xl mt-10 mb-4">Start With Edu Note</p>
           <Link to="/note">
             <Button variant="contained" sx={{ backgroundColor: "#1c2536" }}>

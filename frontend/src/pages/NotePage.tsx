@@ -98,12 +98,11 @@ const NotePage = () => {
                   <td className="px-6 py-4">All Note</td>
                   <td className="px-6 py-4">{ctimeList[idx]}</td>
                   <td className="px-6 py-4">{mtimeList[idx]}</td>
-                  <button
-                    className="ml-5"
-                    onClick={() => handleDeleteNote(notes[idx])}
-                  >
-                    delete Note
-                  </button>
+                  <td className="px-6 py-4">
+                    <button onClick={() => handleDeleteNote(notes[idx])}>
+                      delete Note
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

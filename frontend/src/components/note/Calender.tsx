@@ -30,8 +30,7 @@ const Calendar = () => {
   const handleSaveMemo = async () => {
     const userid = localStorage.getItem("access_token");
     const notename = pathname.substring(6, pathname.length);
-    const res = await uploadMemo(userid, notename, memo);
-    console.log(res);
+    await uploadMemo(userid, notename, memo);
   };
 
   const checkPage = () => {

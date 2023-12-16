@@ -21,7 +21,7 @@ const Modal = ({ closeModal }: { closeModal: any }) => {
     const userid = localStorage.getItem("access_token");
     if (file !== null && name !== null) {
       setProgress(true);
-      const res = await uploadSpeech(userid, name, file);
+      await uploadSpeech(userid, name, file);
       navigate(`/note/${name}`);
       closeModal();
     }
