@@ -20,6 +20,7 @@ from glob import glob
 import uvicorn
 import openai
 import shutil
+import time
 import os
 
 #This is the key for Using OpenAi
@@ -109,13 +110,27 @@ def return_signin_stat(userid:str = Form(...), password:str = Form(...)):
 #Function For Listing up Notes
 @app.get('/getNoteList/{userid}')
 def return_note_list(userid:str):
-    file_list = os.listdir("./data/" + userid)
+    user_path = "./data/" + userid + "/"
+    file_list = os.listdir(user_path)
     file_list_txt = [file.rsplit('.')[0] for file in file_list if not file.startswith(".")]
 
     file_list_txt = list(set(file_list_txt))
-    print(file_list_txt)
 
-    return {"fileList": file_list_txt}
+    modification_time_list = []
+    creation_time_list = []
+    
+    for note in file_list_txt:
+        text_file_path = user_path + note + ".txt"
+        modification_time = time.gmtime(os.path.getmtime(text_file_path))
+        creation_time = time.gmtime(os.path.getctime(text_file_path))
+        modification_time_list.append(time.strftime("%Y-%m-%d %H:%M", modification_time))
+        creation_time_list.append(time.strftime("%Y-%m-%d %H:%M", creation_time))
+ 
+    print(file_list_txt)
+    print(modification_time_list)
+    print(creation_time_list)
+
+    return {"fileList": file_list_txt, "mtimeList": modification_time_list, "ctimeList": creation_time_list}
 
 #Function For Getting Contents of Notes
 @app.get('/getNote/{userid}/{notename}')
@@ -138,7 +153,7 @@ def upload_file(userid:str = Form(...), notename:str = Form(...), contents:str =
 @app.post("/uploadSpeech/{userid}/{notename}")
 def upload_speech(userid:str, notename:str, file: UploadFile):
     upload_dir = "./data/" + userid + "/"
-    
+
     with open(os.path.join(upload_dir, notename + ".mp3"), "wb") as fp:
         shutil.copyfileobj(file.file, fp)
 
