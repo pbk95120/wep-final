@@ -12,10 +12,9 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
-from typing import Optional
 
 #Import Etc..
-from pydantic import BaseModel
+from dotenv import load_dotenv
 from glob import glob
 import uvicorn
 import openai
@@ -25,7 +24,8 @@ import os
 
 #This is the key for Using OpenAi
 #Please do not share this key
-OPEN_API_KEY = "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" #You can use your own key
+load_dotenv()
+OPEN_API_KEY = os.environ.get('OPEN_API_KEY') #You can use your own key
 
 #Define FastAPI Application
 app = FastAPI()
