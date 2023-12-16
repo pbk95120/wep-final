@@ -120,14 +120,14 @@ def return_note_list(userid:str):
 #Function For Getting Contents of Notes
 @app.get('/getNote/{userid}/{notename}')
 def return_note(userid:str, notename:str):
-    f = open("./data/" + userid + "/" + notename,"r")
+    f = open("./data/" + userid + "/" + notename + ".txt","r")
     contents = f.read()
 
     return {"contents": contents}
 
 #Function For Uploading Notes
 @app.post("/uploadNote")
-def upload_file(userid:str = Form(...), password:str = Form(...), notename:str = Form(...), contents:str = Form(...)):
+def upload_file(userid:str = Form(...), notename:str = Form(...), contents:str = Form(...)):
     upload_dir = "./data/" + userid + "/"
     f = open(upload_dir  + notename,"w+")
     f.write(contents)
