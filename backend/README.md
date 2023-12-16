@@ -12,4 +12,6 @@
     
       pip install python-multipart
     
- 4. run this code at the terminal. 'uvicorn backend:app --reload --host=localhost --port=8080'
+ 3. run this code at the terminal
+
+      'uvicorn backend:app --reload --host=localhost --port=8080'
